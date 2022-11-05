@@ -1,5 +1,5 @@
 import { Application, json, urlencoded, Response, Request, NextFunction } from "express";     
-
+import http from "http"
 export class ChattyServer{
   private app: Application;
 
@@ -9,6 +9,39 @@ export class ChattyServer{
   }
 
   public start(): void{
+    this.securityMiddleware(this.app)
+    this.standardMiddleware(this.app)
+    this.routesMiddleware(this.app)
+    this.globalErrorHandler(this.app)
+    this.startSever(this.app)
+    // this.createSocketIO(this.app)
+    // this.startHttpServer(this.app)
+  }
+
+  // ** Middleware **
+
+  private securityMiddleware(app:Application): void{
+    
+  } 
+
+  private standardMiddleware(app:Application): void{
+    
+  } 
+  private routesMiddleware(app:Application): void{
+    
+  } 
+
+  // ** When any error occur it's send to the client side
+  private globalErrorHandler(app:Application): void{
     
   }
+
+  private startSever(app: Application): void{
+    
+  }
+
+  private createSocketIO(httpServer: http.Server): void{
+  }
+
+  private startHttpServer(httpServer: http.Server):void{}
 }
