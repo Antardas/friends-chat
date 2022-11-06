@@ -1,0 +1,21 @@
+import mongoose from "mongoose";
+
+export default () => {
+	const connect = () => {
+		// TODO: This is a local database, change before production
+		mongoose
+			.connect("mongodb://localhost:27017/chatting-app")
+			.then(() => {
+				console.log("Successfully Connected to database");
+			})
+			.catch((err) => {
+				console.log(err.message);
+				console.log("Error Connecting to the Database");
+				return process.exit(1);
+			});
+	};
+
+	connect();
+
+	mongoose.connection.on("disconnected", connect); // if the server is disconnect it's try to connect again
+};
