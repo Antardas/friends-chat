@@ -1,26 +1,5 @@
 {
-  // Indent for ts 2
-  "typescript": {
-    "editor.tabSize": 2
-  },
-  // typescript default formatter
-  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
-  // typscript default formatter is prettier
-  "typescript.format.enable": true,
-  // prettier default formatter
-  "prettier.tabWidth": 2,
-  "prettier.singleQuote": true,
-  "prettier.trailingComma": "es5",
-  "prettier.bracketSpacing": true,
-  "prettier.semi": true,
-  "prettier.useTabs": false,
-  "prettier.printWidth": 80,
-  "prettier.arrowParens": "avoid",
-  "prettier.proseWrap": "preserve",
-  "prettier.htmlWhitespaceSensitivity": "css",
-  "prettier.endOfLine": "auto",
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-  }
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	}
 }
