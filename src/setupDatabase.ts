@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
-
+import { config } from "./config";
 export default () => {
 	const connect = () => {
 		// TODO: This is a local database, change before production
 		mongoose
-			.connect("mongodb://localhost:27017/chatting-app")
+			.connect(`${config.DATABASE_URL}`)
 			.then(() => {
 				console.log("Successfully Connected to database");
 			})
