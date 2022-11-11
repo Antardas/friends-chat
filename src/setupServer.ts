@@ -16,10 +16,12 @@ import cookieSession from "cookie-session";
 import HTTP_STATUS from "http-status-codes";
 import "express-async-errors";
 import compression from "compression";
-import { config } from "./config";
 import { Server } from "socket.io";
 import { createClient } from "redis";
 import { createAdapter } from "@socket.io/redis-adapter";
+// ** Import all Custom Modules **
+import { config } from "./config";
+import applicationRoutes from "./routes";
 
 const SERVER_PORT = 5000;
 
@@ -68,7 +70,9 @@ export class ChattyServer {
 		app.use(json({ limit: "50mb" }));
 		app.use(urlencoded({ extended: true, limit: "50mb" }));
 	}
-	private routesMiddleware(app: Application): void {}
+	private routesMiddleware(app: Application): void {
+		applicationRoutes(app);
+	}
 
 	// ** When any error occur it's send to the client side
 	private globalErrorHandler(app: Application): void {}
