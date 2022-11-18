@@ -19,12 +19,15 @@ import compression from "compression";
 import { Server } from "socket.io";
 import { createClient } from "redis";
 import { createAdapter } from "@socket.io/redis-adapter";
+import Logger from "bunyan";
 // ** Import all Custom Modules **
 import { config } from "./config";
 import applicationRoutes from "./routes";
 import { CustomError, IErrorResponse } from "./shared/globals/error-handler";
 
 const SERVER_PORT = 5000;
+
+const log: Logger = config.createLogger("server");
 
 export class ChattyServer {
 	private app: Application;
@@ -90,7 +93,7 @@ export class ChattyServer {
 				res: Response,
 				next: NextFunction
 			) => {
-				console.log(err);
+				log.error(err);
 				if (err instanceof CustomError) {
 					return res
 						.status(err.statusCode)
@@ -109,7 +112,7 @@ export class ChattyServer {
 			this.startHttpServer(httpServer);
 			this.socketIOConnections(socketIO);
 		} catch (error) {
-			console.log(error);
+			log.error(error);
 		}
 	}
 
@@ -138,9 +141,9 @@ export class ChattyServer {
 	}
 
 	private startHttpServer(httpServer: http.Server): void {
-		console.log(`Server has started with process ${process.pid}`);
+		log.info(`Server has started with process ${process.pid}`);
 		httpServer.listen(SERVER_PORT, () => {
-			console.log(`Server is running on port ${SERVER_PORT}`);
+			log.info(`Server is running on port ${SERVER_PORT}`);
 		});
 	}
 

@@ -1,16 +1,20 @@
 import mongoose from "mongoose";
 import { config } from "./config";
+import Logger from "bunyan";
+
+//
+const log: Logger = config.createLogger("database");
+
 export default () => {
 	const connect = () => {
 		// TODO: This is a local database, change before production
 		mongoose
 			.connect(`${config.DATABASE_URL}`)
 			.then(() => {
-				console.log("Successfully Connected to database");
+				log.info("Successfully Connected to database");
 			})
 			.catch((err) => {
-				console.log(err.message);
-				console.log("Error Connecting to the Database");
+				log.error("Error Connecting to the Database");
 				return process.exit(1);
 			});
 	};
