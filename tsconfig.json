@@ -2,8 +2,8 @@
   "compilerOptions": {
     "target": "es2015",
     "module": "commonjs",
-    "lib": ["DOM", "ES2015"],
-    "baseUrl": ".",
+    "lib": ["DOM", "ES2016"],
+    "baseUrl": "./",
     "outDir": "./build",
     "rootDir": "src",
     "strict": true,
@@ -18,22 +18,22 @@
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
     "pretty": true,
-    "resolveJsonModule": true,
-    "plugins": [
-      {
-        "transform": "typescript-transform-paths"
-      },
-      {
-        "transform": "typescript-transform-paths",
-        "afterDeclarations": true
-      }
-    ],
-    "paths": {
-      "@global/*": ["src/shared/globals/*"],
-      "@service/*": ["src/shared/globals/*"],
-      "@socket/*": ["src/shared/sockets/*"],
-      "@worker/*": ["src/shared/workers/*"],
-      "@root/*": ["src/*"] // add last because it's automatically import from root folder, if we don't add this last, we cannot use specific path
-    }
+    "resolveJsonModule": true
+    // "plugins": [
+    //   {
+    //     "transform": "typescript-transform-paths"
+    //   },
+    //   {
+    //     "transform": "typescript-transform-paths",
+    //     "afterDeclarations": true
+    //   }
+    // ],
+    // "paths": {
+    //   "@global/*": ["src/shared/globals/*"],
+    //   "@service/*": ["src/shared/services/*"],
+    //   "@socket/*": ["src/shared/sockets/*"],
+    //   "@worker/*": ["src/shared/workers/*"],
+    //   "@root/*": ["src/*"]
+    // }
   }
 }

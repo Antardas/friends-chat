@@ -14,9 +14,9 @@ import { createClient } from 'redis';
 import { createAdapter } from '@socket.io/redis-adapter';
 import Logger from 'bunyan';
 // ** Import all Custom Modules **
-import { config } from '@root/config';
-import applicationRoutes from '@root/routes';
-import { CustomError, IErrorResponse } from '@global/helpers/error-handler';
+import { config } from './config';
+import applicationRoutes from './routes';
+import { CustomError, IErrorResponse } from './shared/globals/helpers/error-handler';
 
 const SERVER_PORT = 5000;
 
