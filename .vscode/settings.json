@@ -1,7 +1,8 @@
 {
-	"[typescript]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode",
-		"editor.tabSize": 2
-	},
-	"prettier.singleQuote": true
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+  "prettier.singleQuote": true,
+  "cSpell.words": ["cloudinary"]
 }
