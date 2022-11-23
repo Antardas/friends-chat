@@ -16,8 +16,8 @@ const passwordSchema: ObjectSchema = joi.object({
     'string.max': 'Password must be at most 16 characters long'
   }),
   confirmPassword: joi.string().required().valid(joi.ref('password')).messages({
-    'any.only': 'Passwords do not match',
     'string.base': 'Confirm password must be a string',
+    'any.only': 'Passwords do not match',
     'string.empty': 'Confirm password cannot be empty',
     'any.required': 'Confirm password is required'
   })
