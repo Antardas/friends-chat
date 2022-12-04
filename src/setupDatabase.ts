@@ -14,7 +14,7 @@ export default () => {
         log.info('Successfully Connected to database');
       })
       .catch((err) => {
-        log.error('Error Connecting to the Database');
+        log.error('Error Connecting to the Database', err);
         return process.exit(1);
       });
   };
