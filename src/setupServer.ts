@@ -14,9 +14,9 @@ import { createClient } from 'redis';
 import { createAdapter } from '@socket.io/redis-adapter';
 import Logger from 'bunyan';
 // ** Import all Custom Modules **
-import { config } from './config';
-import applicationRoutes from './routes';
-import { CustomError, IErrorResponse } from './shared/globals/helpers/error-handler';
+import { config } from '@root/config';
+import applicationRoutes from '@root/routes';
+import { CustomError, IErrorResponse } from '@global/helpers/error-handler';
 
 const SERVER_PORT = 5000;
 
@@ -67,18 +67,21 @@ export class ChattyServer {
     app.use(json({ limit: '50mb' }));
     app.use(urlencoded({ extended: true, limit: '50mb' }));
   }
+
   private routesMiddleware(app: Application): void {
     applicationRoutes(app);
   }
 
   // ** When any error occur it's send to the client side
   private globalErrorHandler(app: Application): void {
+    // if route not found then run this middleware
     app.all('*', (req: Request, res: Response, _next: NextFunction) => {
       res.status(HTTP_STATUS.NOT_FOUND).json({
         message: `Can't find ${req.originalUrl} on this server!`
       });
     });
 
+    // if any error occur then run this middleware
     app.use((err: IErrorResponse, _req: Request, res: Response, next: NextFunction) => {
       log.error(err);
       if (err instanceof CustomError) {

@@ -2,7 +2,7 @@
 import { Request } from 'express';
 import { ObjectSchema } from 'joi';
 
-import { JoiRequestValidationError } from '../helpers/error-handler';
+import { JoiRequestValidationError } from '@global/helpers/error-handler';
 
 type IJoiDecorator = (target: any, key: string, descriptor: PropertyDescriptor) => PropertyDescriptor;
 

@@ -10,7 +10,7 @@
     "lint:fix": "eslint src/**/*.ts --fix",
     "prettier:check": "prettier --check src/**/*.{ts,json}",
     "prettier:fix": "prettier --write src/**/*.{ts,json}",
-    "build": "ttsc -p .",
+    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -19,6 +19,7 @@
   "dependencies": {
     "@socket.io/redis-adapter": "^7.2.0",
     "bcryptjs": "^2.4.3",
+    "bull": "^4.10.2",
     "bunyan": "^1.8.15",
     "cloudinary": "^1.32.0",
     "compression": "^1.7.4",
@@ -55,6 +56,7 @@
     "nodemon": "^2.0.20",
     "prettier": "^2.7.1",
     "ts-node": "^10.9.1",
+    "tsc-alias": "^1.8.1",
     "tsconfig-paths": "^4.1.0"
   }
 }

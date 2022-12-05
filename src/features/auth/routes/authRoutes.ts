@@ -1,5 +1,5 @@
 import express, { Router } from 'express';
-import { Signup } from '../controllers/signup';
+import { Signup } from '@auth/controllers/signup';
 class AuthRoutes {
   private router: Router;
 

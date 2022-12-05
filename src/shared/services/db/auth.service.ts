@@ -1,6 +1,6 @@
-import { IAuthDocument } from '../../../features/auth/interfaces/auth.interface';
-import { Auth } from '../../../features/auth/models/auth.scheme';
-import { Helpers } from '../../../shared/globals/helpers/helpers';
+import { IAuthDocument } from '@auth/interfaces/auth.interface';
+import { Auth } from '@auth/models/auth.schema';
+import { Helpers } from '@global/helpers/helpers';
 
 class AuthService {
   public async getUserByUsernameOrEmail(username: string, email: string): Promise<IAuthDocument> {
