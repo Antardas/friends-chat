@@ -12,6 +12,9 @@ import { uploads } from '@global/helpers/cloudinary-upload';
 import { IUserDocument } from '@user/interfaces/user.interface';
 import { UserCache } from '@service/redis/user.cache';
 import { config } from '@root/config';
+import { omit } from 'lodash';
+import { authQueue } from '@service/queues/auth.queue';
+import { userQueue } from '@service/queues/user.queue';
 
 const userCache: UserCache = new UserCache();
 export class Signup {
@@ -49,9 +52,19 @@ export class Signup {
     // add to redis cache
     await userCache.saveUserToCache(`${userObjectId}`, uId, userDataForCache); // save user to cache
 
+    omit(userDataForCache, ['uId', 'userName', 'email', 'password', 'avatarColor']);
+
+    authQueue.addAuthUserJob('addAuthUserToDB', {
+      value: userDataForCache
+    });
+    userQueue.addUserJob('addUserToDB', {
+      value: userDataForCache
+    });
+
     res.status(HTTP_STATUS.CREATED).json({
       message: 'User Create Successfully'
     });
+    return; // end of function
   }
 
   private signupData(data: ISignUpData): IAuthDocument {

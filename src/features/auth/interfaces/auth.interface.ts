@@ -1,5 +1,6 @@
 import { Document } from 'mongoose';
 import { ObjectId } from 'mongodb';
+import { IUserDocument } from '@user/interfaces/user.interface';
 
 declare global {
   namespace Express {
@@ -41,6 +42,7 @@ export interface ISignUpData {
   avatarColor: string;
 }
 
+// for the auth queue
 export interface IAuthJob {
-  value?: string | IAuthDocument;
+  value?: string | IAuthDocument | IUserDocument;
 }
