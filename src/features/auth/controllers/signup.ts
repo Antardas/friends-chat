@@ -1,18 +1,19 @@
 import { ObjectId } from 'mongodb';
 import { Request, Response } from 'express';
 import HTTP_STATUS from 'http-status-codes';
+import { UploadApiResponse } from 'cloudinary';
+import { omit } from 'lodash';
+import JWT from 'jsonwebtoken';
 import { joiValidation } from '@global/decorators/joi-validation.decorators';
 import { signUpSchema } from '@auth/schemas/signUp';
 import { IAuthDocument, ISignUpData } from '@auth/interfaces/auth.interface';
 import { authService } from '@service/db/auth.service';
 import { BadRequestError } from '@global/helpers/error-handler';
 import { Helpers } from '@global/helpers/helpers';
-import { UploadApiResponse } from 'cloudinary';
 import { uploads } from '@global/helpers/cloudinary-upload';
 import { IUserDocument } from '@user/interfaces/user.interface';
 import { UserCache } from '@service/redis/user.cache';
 import { config } from '@root/config';
-import { omit } from 'lodash';
 import { authQueue } from '@service/queues/auth.queue';
 import { userQueue } from '@service/queues/user.queue';
 
@@ -52,7 +53,7 @@ export class Signup {
     // add to redis cache
     await userCache.saveUserToCache(`${userObjectId}`, uId, userDataForCache); // save user to cache
 
-    omit(userDataForCache, ['uId', 'userName', 'email', 'password', 'avatarColor']);
+    omit(userDataForCache, ['uId', 'userName', 'email', 'password', 'avatarColor']); // exclude all fields provide in second arguments
 
     authQueue.addAuthUserJob('addAuthUserToDB', {
       value: userDataForCache
@@ -61,10 +62,27 @@ export class Signup {
       value: userDataForCache
     });
 
+    const userJWT: string = Signup.prototype.signupToken(authData, userObjectId);
+    req.session = { jwt: userJWT };
     res.status(HTTP_STATUS.CREATED).json({
-      message: 'User Create Successfully'
+      message: 'User Create Successfully',
+      user: userDataForCache,
+      token: userJWT
     });
     return; // end of function
+  }
+
+  private signupToken(data: IAuthDocument, userObjectId: ObjectId): string {
+    return JWT.sign(
+      {
+        userId: userObjectId,
+        uId: data.uId,
+        email: data.email,
+        username: data.username,
+        avatarColor: data.avatarColor
+      },
+      config.JWT_TOKEN!
+    );
   }
 
   private signupData(data: ISignUpData): IAuthDocument {
@@ -81,8 +99,8 @@ export class Signup {
     } as IAuthDocument;
   }
 
-  private userData(data: IAuthDocument, userObjectId: ObjectId): IUserDocument {
-    const { _id, username, email, avatarColor, uId, password } = data;
+  private userData(authData: IAuthDocument, userObjectId: ObjectId): IUserDocument {
+    const { _id, username, email, avatarColor, uId, password } = authData;
 
     return {
       _id: userObjectId,

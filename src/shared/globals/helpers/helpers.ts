@@ -20,6 +20,11 @@ export class Helpers {
     return str.toLowerCase();
   }
 
+  /**
+   * @description - It returns a random number based on the length provided
+   * @param {number} integerLength
+   * @returns {number}
+   */
   static generateRandomInteger(integerLength: number): number {
     const characters = '0123456789';
     let result = '';
